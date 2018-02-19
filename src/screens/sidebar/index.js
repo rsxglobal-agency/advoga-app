@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Image, AsyncStorage } from "react-native";
+import { Image, AsyncStorage, View } from "react-native";
+import Rating from 'react-native-rating'
+import { Easing } from 'react-native'
 import {
   Content,
   Text,
@@ -15,6 +17,12 @@ import styles from "./style";
 
 const drawerCover = require("../../../assets/drawer-cover.png");
 const drawerImage = require("../../../assets/logo-kitchen-sink.png");
+
+const images = {
+  starFilled: require('../../../assets/Icons/star_filled.png'),
+  starUnfilled: require('../../../assets/Icons/star_unfilled.png')
+}
+
 const datasAcoes = [
   {
     name: "Lançar Demandas",
@@ -76,7 +84,13 @@ const datas = [
       route: "Geolocalizacao",
       icon: "ios-map",
       bg: "#C5F442",
-    },
+    }
+    // {
+    //   name: "Logout",
+    //   route: "Logout",
+    //     icon: "ios-map",
+    //   bg: "#C5F442",
+    // },
 ];
 
 
@@ -86,7 +100,8 @@ class SideBar extends Component {
     this.state = {
       shadowOffsetWidth: 1,
       shadowRadius: 4,
-      dados:{}
+      dados:{},
+      nota: 0
     };
   }
 
@@ -100,6 +115,8 @@ class SideBar extends Component {
       if (value !== null){
         var dados = JSON.parse(value);
         this.setState({dados: dados})
+        this.setState({nota: dados.nota})
+
       }
     } catch (error) {
       // Error retrieving data
@@ -108,22 +125,45 @@ class SideBar extends Component {
   }
 
   render() {
-    let dados = this.state.dados;
-    console.log(dados);
+    let dados  = this.state.dados;
     return (
       <Container>
         <Content
           bounces={false}
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
         >
+        <View style={styles.headerTop}>
           <Image style={styles.drawerCover} />
           <Image 
             square 
             style={styles.drawerImage}
             source={{ uri: 'http://www.advogaapp.com.br/uploads/avatars/'+ dados.img }} 
             />
-          <ListItem itemDivider>
-            <Text>Ações</Text>
+            <Text style={styles.headerText}>Bem Vindo {dados.nome}</Text>
+          <View style={styles.headerRating}>
+            <Rating
+              initial={this.state.nota}
+              selectedStar={images.starFilled}
+              unselectedStar={images.starUnfilled}
+              config={{
+                easing: Easing.inOut(Easing.ease),
+                duration: 350,
+
+              }}
+              stagger={80}
+              maxScale={1.4}
+              starStyle={{
+                width: 20,
+                height: 20,
+              }}
+            />
+          </View>
+
+        </View>
+
+        <Content>
+          <ListItem style={{backgroundColor: 'transparent'}} itemDivider>
+            <Text>AÇÕES</Text>
           </ListItem>
           <List
             dataArray={datasAcoes}
@@ -160,8 +200,8 @@ class SideBar extends Component {
                   </Right>}
               </ListItem>}
           />
-          <ListItem itemDivider>
-            <Text>Minhas Demandas</Text>
+          <ListItem style={styles.separator} itemDivider>
+            <Text>MINHAS DEMANDAS</Text>
           </ListItem>
           <List
             dataArray={datasDemandas}
@@ -198,8 +238,8 @@ class SideBar extends Component {
                   </Right>}
               </ListItem>}
           />
-          <ListItem itemDivider>
-            <Text>Minhas Diligências</Text>
+          <ListItem style={styles.separator} itemDivider>
+            <Text>MINHAS DILIGÊNCIAS</Text>
           </ListItem>
           <List
             dataArray={datasDiligencias}
@@ -236,8 +276,7 @@ class SideBar extends Component {
                   </Right>}
               </ListItem>}
           />
-          <ListItem itemDivider>
-            <Text> </Text>
+          <ListItem style={styles.separator} itemDivider>
           </ListItem>
           <List
             dataArray={datas}
@@ -274,7 +313,7 @@ class SideBar extends Component {
                   </Right>}
               </ListItem>}
           />
-
+        </Content>
 
         </Content>
       </Container>

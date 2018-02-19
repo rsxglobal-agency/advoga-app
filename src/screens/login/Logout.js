@@ -18,7 +18,8 @@ import {scale, scaleModerate, scaleVertical} from '../utils/scale';
 import { CheckBox } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 import { FirebaseApp } from '../utils/firebase-app';
-export class Login extends React.Component {
+
+export class Logout extends React.Component {
   constructor(props) {
     super(props);
     this.db = FirebaseApp.database();
@@ -115,44 +116,8 @@ export class Login extends React.Component {
       behavior="padding">
 
       <View style={styles.container}>
-        <View style={styles.headerTop}>
-          <Image
-            source={require('../../../assets/logo.png')}
-            style={styles.logo}
-          />
-        </View>
-        <View style={styles.content}>
-          <TextInput
-            style={styles.campoInput}
-            maxLength={30}
-            underlineColorAndroid="transparent"
-            keyboardType={'default'}
-            returnKeyType={'next'}
-            onChangeText={(email) => this.setState({email: email})}
-            placeholder='Email'
-            />
-          <TextInput
-            placeholder='Senha'
-            underlineColorAndroid='transparent'
-            onChangeText={(password) => this.setState({password})}
-            style={styles.campoInput}
-            secureTextEntry={true}
-          />
-          <TouchableOpacity onPress={this.login}>
-          <Text style={styles.buttonLogin}> ENTRAR </Text>
-          </TouchableOpacity>
-
-        <CheckBox
-          title='Entrar Automaticamente'
-          containerStyle={styles.checkbox}
-          textStyle={{color:'#fff', fontWeight:'normal'}}
-          checked={this.state.checked}
-          onPress={() => this.setState({ checked: !this.state.checked })}
-        />
-          <TouchableOpacity onPress={this.rememberPass} >
-            <Text style={styles.buttonNewPass}> Esqueceu sua senha? </Text>
-          </TouchableOpacity>
-        </View>
+        <Text> Você está desconectado! </Text>
+      </View>
 
         <View style={styles.footer}>
           <TouchableOpacity onPress={() => this.props.navigation.dispatch(NavigationActions.navigate({ routeName: 'Cadastro'}))}>

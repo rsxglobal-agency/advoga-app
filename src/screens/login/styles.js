@@ -31,10 +31,18 @@ screen: {
     width: 135,
 
   },
+
+  logo: {
+    height: 150,
+    width: 135,
+  },
+
+
   content: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20
+    marginTop: 20,
+    flex:1
   },
 
   campoInput: { 
@@ -59,6 +67,7 @@ screen: {
     borderWidth: 0
   },
 
+
   buttonNewPass:{
     textAlign: 'center',
     color: '#fff',
@@ -71,7 +80,7 @@ screen: {
     fontWeight: 'bold', 
   },
 
-  footer: {}
+  footer: {backgroundColor: 'transparent'}
 
 
 };

@@ -1,4 +1,8 @@
-console.log('http');
+import { NavigationActions } from 'react-navigation';
+import { 
+  AsyncStorage
+} from 'react-native';
+
 let HttpService = {
 
     //prod:
@@ -23,14 +27,15 @@ let HttpService = {
             let url = this.apiURL + endpoint + this.extractGetParams(params, token);
             let headers = {};
             if(token !== null) {
-                headers.Authorization = token;
+                headers.Authorization = 'Bearer '+token;
             }
             fetch(url, {headers: headers}).then((response) => response.json()).then((responseJson) => {
                 if (callbackSuccess && typeof(callbackSuccess) === "function"){
-                    console.log(url, headers);
+                    //console.log(url, headers);
                     callbackSuccess(responseJson);
                 }
             }).catch((error) => {
+               //erroDados();
                 console.log(url, headers);
                 throw error;
             });
@@ -48,7 +53,7 @@ let HttpService = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',};
             if(token !== null) {
-                headers.Authorization = token;
+                headers.Authorization = 'Bearer ' + token;
             }
             let body = JSON.stringify(params);
             console.log(body);
@@ -62,6 +67,7 @@ let HttpService = {
                     callbackSuccess(responseJson);
                 }
             }).catch((error) => {
+
                 console.log(url, headers, body);
                 throw error;
             });
@@ -71,7 +77,16 @@ let HttpService = {
             }
         }
     },
-
 };
+
+
+function erroDados(){
+
+    alert('sua sessão expirou, por favor logue-se novamente!');
+    AsyncStorage.clear();
+    //this.props.navigator.immediatelyResetStack([Router.getRoute('main')], 0);
+
+
+ }
 
 export default HttpService;
