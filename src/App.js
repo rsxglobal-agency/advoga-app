@@ -46,7 +46,7 @@ export default class App extends React.Component {
 
 
 async componentDidMount() {
-      StatusBar.setHidden(false);
+      StatusBar.setHidden(true);
       await Expo.Font.loadAsync({
         'Roboto': require('native-base/Fonts/Roboto.ttf'),
         'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),

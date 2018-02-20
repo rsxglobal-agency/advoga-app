@@ -91,7 +91,7 @@ class Home extends Component {
                 <Body>
                   <Text> {info.item.nome} </Text>
                   <Rating
-                    initial={info.item.total_rating}
+                    initial={3}
                     selectedStar={images.starFilled}
                     unselectedStar={images.starUnfilled}
                     config={{
